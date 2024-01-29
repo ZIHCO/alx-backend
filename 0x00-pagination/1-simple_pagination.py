@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+"""contains the class Server"""
 import csv
 import math
 from typing import List
@@ -16,6 +18,7 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
+        """instantiate an object"""
         self.__dataset = None
 
     def dataset(self) -> List[List]:
