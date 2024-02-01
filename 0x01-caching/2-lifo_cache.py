@@ -26,7 +26,7 @@ class LIFOCache(BaseCaching):
                     del self.cache_data[type(self).__LIFO[-1]]
                     self.cache_data[key] = item
                     type(self).__LIFO.pop()
-                    type(self).__LIFO = type(self).__LIFO.append(key)
+                    type(self).__LIFO.append(key)
 
     def get(self, key):
         """returns self.cache_data[key]"""
