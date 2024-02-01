@@ -36,17 +36,11 @@ class LRUCache(BaseCaching):
         """returns self.cache_data[key]"""
         if key is not None:
             try:
-                """if type(self).__MRC.find(key) > 0:
-                    index = type(self).__MRC.find(key)
-                    if index == 0:
-                        lru_key = type(self).__MRC[0]
-                        type(self).__MRC = type(self).__MRC[1:]
-                        type(self).__MRC += lru_key
-                    else:
-                        lru_key = type(self).__MRC[index]
-                        type(self).__MRC = (type(self).__MRC[0:index]
-                                            + type(self).__MRC[(index + 1):])
-                        type(self).__MRC += lru_key"""
+                if key in type(self).__MRC:
+                    index = type(self).__MRC.index(key)
+                    lru_key = type(self).__MRC[index]
+                    del type(self).__MRC[index]
+                    type(self).__MRC.append(lru_key)
                 return self.cache_data[key]
             except KeyError:
                 return None
