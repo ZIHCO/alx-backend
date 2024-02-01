@@ -6,7 +6,7 @@ from base_caching import BaseCaching
 
 class LRUCache(BaseCaching):
     """subclass of BaseCaching"""
-    __MRC = []
+    __MRC = ""
 
     def __init__(self):
         """instantiate an object"""
@@ -17,20 +17,27 @@ class LRUCache(BaseCaching):
         if key is not None and item is not None:
             if self.is_compulsory_miss():
                 self.cache_data[key] = item
-                type(self).__MRC.append(key)
+                type(self).__MRC += key
             else:
                 if self.hit_validator(key):
                     self.cache_data[key] = item
-                    lru_key = type(self).__MRC[0]
-                    type(self).__MRC = type(self).__MRC[1:]
-                    type(self).__MRC.append(lru_key)
+                    index = type(self).__MRC.find(key)
+                    if index == 0:
+                        lru_key = type(self).__MRC[0]
+                        type(self).__MRC = type(self).__MRC[1:]
+                        type(self).__MRC += lru_key
+                    else:
+                        lru_key = type(self).__MRC[index]
+                        type(self).__MRC = (type(self).__MRC[:index]
+                                            + type(self).__MRC[(index + 1):])
+                        type(self).__MRC += lru_key
 
                 else:
                     print(f"DISCARD: {type(self).__MRC[0]}")
                     del self.cache_data[type(self).__MRC[0]]
                     self.cache_data[key] = item
                     type(self).__MRC = type(self).__MRC[1:]
-                    type(self).__MRC.append(key)
+                    type(self).__MRC += key
 
     def get(self, key):
         """returns self.cache_data[key]"""
