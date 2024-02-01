@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+"""contains the class MRUCache that inherits from
+BaseCaching"""
+from base_caching import BaseCaching
+
+
+class MRUCache(BaseCaching):
+    """subclass of BaseCaching"""
+    __MRC = []
+
+    def __init__(self):
+        """instantiate an object"""
+        super().__init__()
+
+    def put(self, key, item):
+        """instatanc emethod to append properties to self.cache_data"""
+        if key is not None and item is not None:
+            if self.is_compulsory_miss():
+                self.cache_data[key] = item
+                type(self).__MRC.append(key)
+            else:
+                if self.hit_validator(key):
+                    self.cache_data[key] = item
+                    index = type(self).__MRC.index(key)
+                    lru_key = type(self).__MRC[index]
+                    del type(self).__MRC[index]
+                    type(self).__MRC.append(lru_key)
+                else:
+                    print(f"DISCARD: {type(self).__MRC[-1]}")
+                    del self.cache_data[type(self).__MRC[-1]]
+                    self.cache_data[key] = item
+                    type(self).__MRC.pop()
+                    type(self).__MRC.append(key)
+
+    def get(self, key):
+        """returns self.cache_data[key]"""
+        if key is not None:
+            try:
+                if key in type(self).__MRC:
+                    index = type(self).__MRC.index(key)
+                    lru_key = type(self).__MRC[index]
+                    del type(self).__MRC[index]
+                    type(self).__MRC.append(lru_key)
+                return self.cache_data[key]
+            except KeyError:
+                return None
+        return None
+
+    def hit_validator(self, key):
+        """return a boolean"""
+        if key in self.cache_data:
+            return True
+        return False
+
+    def is_compulsory_miss(self):
+        """return a boolean"""
+        if len(self.cache_data) < type(self).MAX_ITEMS:
+            return True
+        return False
