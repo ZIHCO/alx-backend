@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """contains get_locale function"""
 from flask_babel import Babel
-from flask import Flask, template_render, request
+from flask import Flask, render_template, request
 
 
 class Config:
