@@ -29,7 +29,7 @@ def hello():
 @babel.localeselector
 def get_locale():
     """determines best match for language"""
-    return request.accept_languages.best_match(["en", "fr"])
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 if __name__ == "__main__":
