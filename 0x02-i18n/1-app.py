@@ -4,14 +4,6 @@ from flask import Flask
 from flask import render_template
 from flask_babel import Babel
 
-app = Flask(__name__)
-
-
-@app.route('/')
-def index():
-    """index page"""
-    return render_template("1-index.html")
-
 
 class Config:
     """language config in app"""
@@ -20,5 +12,13 @@ class Config:
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
+app = Flask(__name__)
 app.config.from_object(Config)
+
 babel = Babel(app)
+
+
+@app.route('/', strict_slashes=False)
+def hello():
+    """index page"""
+    return render_template("1-index.html")
