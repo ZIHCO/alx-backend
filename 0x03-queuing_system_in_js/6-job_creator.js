@@ -1,8 +1,8 @@
 import { createQueue } from 'kue';
 
-const push_notification_code = createQueue();
+const queue = createQueue();
 
-const job = push_notification_code.create('message', {
+const job = queue.create('push_notification_code', {
   phoneNumber: '7054783923',
   message: 'I love you'
 }).save((err) => {
