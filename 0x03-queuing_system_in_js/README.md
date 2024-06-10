@@ -1,1 +1,1 @@
-This directory contains works done on queuing system JS
+Learning queuing system with redis using node.js
